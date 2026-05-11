@@ -107,6 +107,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
     }
     public void inicializaJogo() {
         imagem.setImageResource(R.drawable.forca_0_9);
+        indiceListaImagens = 0;
         palavra = sorteiaPalavra();
         estado = new char[palavra.length()];
 
@@ -138,9 +139,26 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         imagem.setImageResource(listaImagens.get(indiceListaImagens));
     }
 
+    public void verificaLetra(char c) {
+        boolean status = false;
+        for(int i = 0; i < palavra.length(); i++) {
+            if(palavra.charAt(i) == c){
+                status = true;
+                estado[i] = c;
+            }
+            if(status) {
+                atualizaForca();
+            }
+            else {
+                atualizaTexto();
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
         Button b = (Button) v;
-        texto.setText(b.getText().toString());
+        verificaLetra(b.getText().toString().charAt(0));
+        b.setEnabled(false);
     }
 }
