@@ -108,6 +108,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             Button b = findViewById(listaIdsButtons.get(j));
             b.setOnClickListener(this);
         }
+        inicializaJogo();
     }
     public void inicializaJogo() {
         imagem.setImageResource(R.drawable.forca_0_9);
@@ -122,12 +123,12 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         contaAcerto = 0;
         txAcerto.setText(Integer.toString(contaAcerto));
         txErro.setText(Integer.toString(contaErro)+"/"+Integer.toString(listaImagens.size()));
+        atualizaTexto();
 
         for(int j = 0; j < listaIdsButtons.size(); j++) {
             Button b = findViewById(listaIdsButtons.get(j));
             b.setEnabled(true);
         }
-        atualizaTexto();
     }
     public String sorteiaPalavra() {
         String palavra = new String();
