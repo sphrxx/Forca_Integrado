@@ -77,7 +77,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
             }
 
             if(temTextoDigitado && temRadioChecado) {
-                // aqui salva no BD
+                // aqui salva no BD.
                 Palavra palavra1 = new Palavra();
                 palavra1.setPalavraDigitada(texto);
                 bd.salvarPalavra(palavra1);

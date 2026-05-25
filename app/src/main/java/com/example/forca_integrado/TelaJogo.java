@@ -110,6 +110,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         }
         inicializaJogo();
     }
+    //a
     public void inicializaJogo() {
         imagem.setImageResource(R.drawable.forca_0_9);
         indiceListaImagens = 0;

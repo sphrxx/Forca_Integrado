@@ -18,4 +18,5 @@ public class Palavra {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
+    // a
 }
