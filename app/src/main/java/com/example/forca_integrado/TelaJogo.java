@@ -43,7 +43,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         imagem = findViewById(R.id.imageView2);
         txAcerto = findViewById(R.id.numAcerto);
         txErro = findViewById(R.id.numErro);
-        indiceListaImagens = -1;
+
         contaAcerto = 0;
         contaErro = 0;
         listaImagens = new ArrayList<Integer>();
@@ -156,22 +156,23 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
     public void verificaLetra(char c) {
         boolean status = false;
         for(int i = 0; i < palavra.length(); i++) {
-            if(palavra.charAt(i) == c){
+            if (palavra.charAt(i) == c) {
                 status = true;
                 estado[i] = c;
             }
-            if(status) {
-                atualizaForca();
-                contaErro++;
-                txErro.setText(Integer.toString(contaErro)+"/"+Integer.toString(listaImagens.size()));
-            }
-            else {
-                atualizaTexto();
-                contaAcerto++;
-                txAcerto.setText(Integer.toString(contaAcerto));
-            }
-            checaSeTerminou();
         }
+
+        if(!status) {
+            atualizaForca();
+            contaErro++;
+            txErro.setText(Integer.toString(contaErro)+"/"+Integer.toString(listaImagens.size()));
+        }
+        else {
+            atualizaTexto();
+            contaAcerto++;
+            txAcerto.setText(Integer.toString(contaAcerto));
+        }
+        checaSeTerminou();
     }
     public void checaSeTerminou() {
         boolean verifica = false;
