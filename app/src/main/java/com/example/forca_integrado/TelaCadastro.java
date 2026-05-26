@@ -87,6 +87,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
         }
         if(v == btnListar) {
 
+
         }
     }
 
