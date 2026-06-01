@@ -1,6 +1,7 @@
 package com.example.forca_integrado;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -86,8 +87,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
 
         }
         if(v == btnListar) {
-
-
+            startActivity(new Intent(this, TelaRecycler.class));
         }
     }
 

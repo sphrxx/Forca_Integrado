@@ -23,13 +23,22 @@ public class Adaptador extends RecyclerView.Adapter<RecyHolder> {
         return new RecyHolder(view);
     }
 
+    public Adaptador(ArrayList<Palavra> lista) {
+        this.lista = lista;
+    }
+
+
+
+
     @Override
     public void onBindViewHolder(@NonNull RecyHolder holder, int position) {
+        holder.txPalavra.setText(lista.get(position).getPalavraDigitada());
+        holder.txCategoria.setText(lista.get(position).getCategoria());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return lista.size();
     }
 }

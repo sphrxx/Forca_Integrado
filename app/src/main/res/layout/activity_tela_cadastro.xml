@@ -87,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Estado"
+                android:text="Personagem"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
@@ -96,7 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="Cidade"
+                android:text="Objetos"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 

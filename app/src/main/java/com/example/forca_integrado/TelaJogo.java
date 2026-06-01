@@ -65,10 +65,10 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         listaPalavras = new ArrayList<String>();
         listaPalavras.add("PARAPROPALAEHOPLOPHORUS");
         listaPalavras.add("VIDEOGAME");
-        listaPalavras.add("MATERNIDADE");
+        listaPalavras.add("ZELDA");
         listaPalavras.add("CARIDADE");
         listaPalavras.add("CRUZ");
-        listaPalavras.add("ROBO");
+        listaPalavras.add("SARIA");
         listaPalavras.add("COMPANHEIRO");
         listaPalavras.add("PRUDENCIA");
         listaPalavras.add("COSMOS");
