@@ -23,7 +23,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
     private Button btnCadastrar, btnListar;
     private RadioGroup grupo;
     private BD bd;
-    private String categoriaSelecionada, palavra;
+    private String categoriaSelecionada, palavra, categoria;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,6 +37,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
             return insets;
         });
         bd = new BD(TelaCadastro.this);
+        categoria = new String();
         textoDaPalavra = findViewById(R.id.textPalavra);
         textoDica = findViewById(R.id.editTextDica);
         btnCadastrar = findViewById(R.id.button2);
@@ -48,31 +49,41 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
     @Override
     public void onClick(View v) {
         if(v == btnCadastrar) {
             String texto = textoDaPalavra.getText().toString();
             String dica = textoDica.getText().toString();
+            String nivel;
 
             // Vamos testar os textos pra ver se tem algum selecionado
             boolean temTextoDigitado = false;
-            boolean temDicaDigitado = false;
-
             if(texto.isEmpty()) {
-                Toast.makeText(this, "Faltou palavra, DOIDÃO", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Faltou palavra, DOIDÃO", Toast.LENGTH_SHORT).show();
             }
             else {
                 temTextoDigitado = true;
             }
 
+            boolean temDicaDigitado = false;
             if(dica.isEmpty()) {
-                Toast.makeText(this, "Tem que dar alguma dica, CARA.", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Tem que dar alguma dica, CARA.", Toast.LENGTH_SHORT).show();
             }
             else {
                 temDicaDigitado = true;
             }
 
-            // Vamos testar os Radios para ver se tem algum selecionado
+            if(texto.length() <= 4) {
+                nivel = "FACIL";
+            }
+            else if(texto.length() <= 7) {
+                nivel = "MEDIO";
+            }
+            else {
+                nivel = "DIFICIL";
+            }
+
             RadioButton r1 = findViewById(R.id.radioButton);
             RadioButton r2 = findViewById(R.id.radioButton2);
             RadioButton r3 = findViewById(R.id.radioButton3);
@@ -84,7 +95,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
                 temRadioChecado = true;
             }
             else {
-                Toast.makeText(this, "Qual a categoria, BURRÓIDE?", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Qual a categoria, BURRÓIDE?", Toast.LENGTH_SHORT).show();
             }
 
             if(temTextoDigitado && temDicaDigitado && temRadioChecado) {
@@ -92,8 +103,13 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
                 Palavra palavra1 = new Palavra();
                 palavra1.setPalavraDigitada(texto);
                 palavra1.setDica(dica);
+                palavra1.setNivel(nivel);
+                palavra1.setCategoria(categoria);
+                Toast.makeText(this, "Deu certo, BOA!", Toast.LENGTH_SHORT).show();
                 bd.salvarPalavra(palavra1);
             }
+
+
 
         }
         if(v == btnListar) {
@@ -105,8 +121,8 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
     public void onCheckedChanged(@NonNull RadioGroup group, int checkedId) {
         if(group == grupo) {
             RadioButton temporario = findViewById(checkedId);
+            categoria = temporario.getText().toString();
             Toast.makeText(TelaCadastro.this, temporario.getText().toString(), Toast.LENGTH_SHORT).show();
         }
-
     }
 }

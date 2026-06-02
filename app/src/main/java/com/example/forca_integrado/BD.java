@@ -24,7 +24,8 @@ public class BD extends SQLiteOpenHelper {
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "palavra TEXT, "+
                 "categoria TEXT,"+
-                "dica TEXT)"
+                "dica TEXT,"+
+                "nivel TEXT)"
         );
     }
 
@@ -34,6 +35,7 @@ public class BD extends SQLiteOpenHelper {
         valores.put("palavra", p.getPalavraDigitada());
         valores.put("categoria", p.getCategoria());
         valores.put("dica", p.getDica());
+        valores.put("nivel", p.getNivel());
         db.insert("tabelaPalavra", null, valores);
         db.close();
     }
@@ -46,10 +48,12 @@ public class BD extends SQLiteOpenHelper {
             String palavra = cursor.getString(cursor.getColumnIndexOrThrow("palavra"));
             String categoria = cursor.getString(cursor.getColumnIndexOrThrow("categoria"));
             String dica = cursor.getString(cursor.getColumnIndexOrThrow("dica"));
+            String nivel = cursor.getString(cursor.getColumnIndexOrThrow("nivel"));
             Palavra p = new Palavra();
             p.setPalavraDigitada(palavra);
             p.setCategoria(categoria);
             p.setDica(dica);
+            p.setNivel(nivel);
             lista.add(p);
         }
         cursor.close();
