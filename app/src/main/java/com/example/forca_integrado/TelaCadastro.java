@@ -19,7 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class TelaCadastro extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
-    public EditText textoDaPalavra;
+    public EditText textoDaPalavra, textoDica;
     private Button btnCadastrar, btnListar;
     private RadioGroup grupo;
     private BD bd;
@@ -38,6 +38,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
         });
         bd = new BD(TelaCadastro.this);
         textoDaPalavra = findViewById(R.id.textPalavra);
+        textoDica = findViewById(R.id.editTextDica);
         btnCadastrar = findViewById(R.id.button2);
         btnCadastrar.setOnClickListener(this);
         btnListar = findViewById(R.id.button3);
@@ -51,15 +52,24 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == btnCadastrar) {
             String texto = textoDaPalavra.getText().toString();
+            String dica = textoDica.getText().toString();
+
             // Vamos testar os textos pra ver se tem algum selecionado
             boolean temTextoDigitado = false;
-
+            boolean temDicaDigitado = false;
 
             if(texto.isEmpty()) {
                 Toast.makeText(this, "Faltou palavra, DOIDÃO", Toast.LENGTH_SHORT);
             }
             else {
                 temTextoDigitado = true;
+            }
+
+            if(dica.isEmpty()) {
+                Toast.makeText(this, "Tem que dar alguma dica, CARA.", Toast.LENGTH_SHORT);
+            }
+            else {
+                temDicaDigitado = true;
             }
 
             // Vamos testar os Radios para ver se tem algum selecionado
@@ -74,15 +84,15 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
                 temRadioChecado = true;
             }
             else {
-                Toast.makeText(this, "Faltou marcar categoria", Toast.LENGTH_SHORT);
+                Toast.makeText(this, "Qual a categoria, BURRÓIDE?", Toast.LENGTH_SHORT);
             }
 
-            if(temTextoDigitado && temRadioChecado) {
+            if(temTextoDigitado && temDicaDigitado && temRadioChecado) {
                 // aqui salva no BD.
                 Palavra palavra1 = new Palavra();
                 palavra1.setPalavraDigitada(texto);
+                palavra1.setDica(dica);
                 bd.salvarPalavra(palavra1);
-
             }
 
         }

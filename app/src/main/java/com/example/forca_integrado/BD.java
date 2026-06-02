@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class BD extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "banco.db";
+    private static final String DATABASE_NAME = "banco1.db";
 
     public BD(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,7 +23,8 @@ public class BD extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS tabelaPalavra ("+
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "palavra TEXT, "+
-                "categoria TEXT)"
+                "categoria TEXT,"+
+                "dica TEXT)"
         );
     }
 
@@ -32,6 +33,7 @@ public class BD extends SQLiteOpenHelper {
         ContentValues valores = new ContentValues();
         valores.put("palavra", p.getPalavraDigitada());
         valores.put("categoria", p.getCategoria());
+        valores.put("dica", p.getDica());
         db.insert("tabelaPalavra", null, valores);
         db.close();
     }
@@ -43,9 +45,11 @@ public class BD extends SQLiteOpenHelper {
         while(cursor.moveToNext()) {
             String palavra = cursor.getString(cursor.getColumnIndexOrThrow("palavra"));
             String categoria = cursor.getString(cursor.getColumnIndexOrThrow("categoria"));
+            String dica = cursor.getString(cursor.getColumnIndexOrThrow("dica"));
             Palavra p = new Palavra();
             p.setPalavraDigitada(palavra);
             p.setCategoria(categoria);
+            p.setDica(dica);
             lista.add(p);
         }
         cursor.close();
@@ -57,10 +61,6 @@ public class BD extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
-
-
-
 
 
 
