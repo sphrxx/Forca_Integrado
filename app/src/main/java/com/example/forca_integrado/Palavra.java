@@ -1,7 +1,7 @@
 package com.example.forca_integrado;
 
 public class Palavra {
-    private String palavraDigitada, categoria, dica, nivel;
+    protected String palavraDigitada, categoria, dica, nivel;
 
     public String getPalavraDigitada() {
         return palavraDigitada;
