@@ -67,7 +67,6 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
 
         btnDica = findViewById(R.id.buttonDica);
         btnDica.setOnClickListener(this);
-        btnDica.setVisibility(View.INVISIBLE);
 
         texto = findViewById(R.id.textView3);
 
@@ -105,23 +104,17 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         }
         inicializaJogo();
 
-        Toast.makeText(this, "A categoria da palavra é: " + listaObjetos.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
-
-        indiceLista++;
-
-        if(contaErro >= 2) {
-            btnDica.setVisibility(View.VISIBLE);
-        }
-
     }
     //a
     public void inicializaJogo() {
         inicializaBanco();
 
+        btnDica.setVisibility(View.INVISIBLE);
+
         imagem.setImageResource(R.drawable.forca_0_9);
         indiceListaImagens = 0;
 
-        String palavra = new String();
+        palavra = new String();
         palavra = listaObjetos.get(indiceLista).getPalavraDigitada();
 
         estado = new char[palavra.length()];
@@ -140,6 +133,8 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             b.setEnabled(true);
         }
 
+        Toast.makeText(this, "A categoria da palavra é: " + listaObjetos.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+
     }
 
     public void inicializaBanco() {
@@ -148,6 +143,9 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         listaObjetos = databasePalavra.listarPalavras();
         palavra = listaObjetos.get(indiceLista).getPalavraDigitada();
         Collections.shuffle(listaObjetos);
+
+        indiceLista++;
+
     }
 
     public void atualizaTexto(){
@@ -167,6 +165,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
 
     public void verificaLetra(char c) {
         boolean status = false;
+        Toast.makeText(this, palavra+ " "+c, Toast.LENGTH_SHORT).show();
         for(int i = 0; i < palavra.length(); i++) {
             if (palavra.charAt(i) == c) {
                 status = true;
@@ -184,6 +183,11 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             contaAcerto++;
             txAcerto.setText(Integer.toString(contaAcerto));
         }
+
+        if(contaErro >= 2) {
+            btnDica.setVisibility(View.VISIBLE);
+        }
+
         checaSeTerminou();
     }
     public void checaSeTerminou() {
@@ -224,14 +228,14 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if(v == b1) {
-            Button b = (Button) v;
-            verificaLetra(b.getText().toString().charAt(0));
-            b.setEnabled(false);
-        }
 
         if(v == btnDica) {
             Toast.makeText(this, "Dica: " + listaObjetos.get(indiceLista).getDica(), Toast.LENGTH_SHORT).show();
+        }else {
+            Button b = (Button) v;
+            verificaLetra(b.getText().toString().charAt(0));
+            b.setEnabled(false);
+
         }
     }
 }

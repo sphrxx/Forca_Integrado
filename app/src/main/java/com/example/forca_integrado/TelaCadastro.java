@@ -53,7 +53,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == btnCadastrar) {
-            String texto = textoDaPalavra.getText().toString();
+            String texto = textoDaPalavra.getText().toString().toUpperCase();
             String dica = textoDica.getText().toString();
             String nivel;
 
