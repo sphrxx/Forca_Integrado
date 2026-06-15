@@ -29,6 +29,7 @@ public class BD extends SQLiteOpenHelper {
         );
     }
 
+    // bb
     public void salvarPalavra(Palavra p){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues valores = new ContentValues();
