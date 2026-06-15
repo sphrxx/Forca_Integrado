@@ -1,6 +1,7 @@
 package com.example.forca_integrado;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,13 +22,14 @@ import java.util.Collections;
 public class TelaJogo extends AppCompatActivity implements View.OnClickListener {
     private ImageView imagem;
     private ArrayList<Integer> listaImagens, listaIdsButtons;
-    private ArrayList<Palavra> listaObjetos, listaCategorias;
-    private int indiceListaImagens, contaAcerto, contaErro, indiceLista;
+    private ArrayList<Palavra> listaObjetos, listaCategorias, listaFacil, listaMedia, listaDificil;
+    private int indiceListaImagens, contaAcerto, contaErro, indiceLista, contadorVitoria;
     private TextView texto, txAcerto, txErro;
-    private String palavra;
+    private String palavra, nivelAtual;
     private char[] estado;
     private Button b1, btnDica;
     private BD databasePalavra;
+    private SharedPreferences shared;
 
     // ta olhando uq curioso 🤨
 
@@ -48,7 +50,12 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
 
         contaAcerto = 0;
         contaErro = 0;
+        contadorVitoria = 0;
         indiceLista = 0;
+
+
+
+
         listaImagens = new ArrayList<Integer>();
         listaImagens.add(R.drawable.forca_1_9);
         listaImagens.add(R.drawable.forca_2_9);
@@ -102,12 +109,29 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             Button b = findViewById(listaIdsButtons.get(j));
             b.setOnClickListener(this);
         }
-        inicializaJogo();
+        atualizaNivel();
 
     }
     //a
-    public void inicializaJogo() {
+    public void inicializaJogo(String nivel) {
         inicializaBanco();
+
+        String temp;
+        listaFacil = new ArrayList<Palavra>();
+        listaMedia = new ArrayList<Palavra>();
+        listaDificil = new ArrayList<Palavra>();
+        for(int i = 0; i < listaObjetos.size(); i++) {
+            temp = listaObjetos.get(i).getNivel();
+            if(temp.compareToIgnoreCase("FACIL") == 0) {
+                listaFacil.add(listaObjetos.get(i));
+            }
+            else if(temp.compareToIgnoreCase("MEDIO") == 0) {
+                listaMedia.add(listaObjetos.get(i));
+            }
+            else if(temp.compareToIgnoreCase("DIFICIL") == 0) {
+                listaDificil.add(listaObjetos.get(i));
+            }
+        }
 
         btnDica.setVisibility(View.INVISIBLE);
 
@@ -115,7 +139,15 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         indiceListaImagens = 0;
 
         palavra = new String();
-        palavra = listaObjetos.get(indiceLista).getPalavraDigitada();
+        if(nivel == "FACIL") {
+            palavra = listaFacil.get(indiceLista).getPalavraDigitada();
+        }
+        else if(nivel == "MEDIO") {
+            palavra = listaMedia.get(indiceLista).getPalavraDigitada();
+        }
+        else if (nivel == "DIFICIL") {
+            palavra = listaDificil.get(indiceLista).getPalavraDigitada();
+        }
 
         estado = new char[palavra.length()];
 
@@ -134,7 +166,6 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         }
 
         Toast.makeText(this, "A categoria da palavra é: " + listaObjetos.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
-
     }
 
     public void inicializaBanco() {
@@ -156,6 +187,23 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             temporaria += estado[i] + " ";
         }
         texto.setText(temporaria);
+    }
+
+    public void atualizaNivel() {
+        contadorVitoria++;
+        nivelAtual = new String();
+
+        if(contadorVitoria <= 3) {
+            nivelAtual = "FACIL";
+        }
+        else if(contadorVitoria <= 6) {
+            nivelAtual = "MEDIO";
+        }
+        else {
+            nivelAtual = "DIFICIL";
+        }
+
+        inicializaJogo(nivelAtual);
     }
 
     public void atualizaForca() {
@@ -206,10 +254,11 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             caixa.setPositiveButton("Jogar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    inicializaJogo();
+                    atualizaNivel();
                 }
             });
             caixa.show();
+
 
         }
         if(contaErro >= listaImagens.size()) {
@@ -219,7 +268,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             caixa.setPositiveButton("Jogar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    inicializaJogo();
+                    atualizaNivel();
                 }
             });
             caixa.show();

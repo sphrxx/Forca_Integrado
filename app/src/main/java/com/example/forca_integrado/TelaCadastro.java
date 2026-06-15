@@ -23,7 +23,7 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
     private Button btnCadastrar, btnListar;
     private RadioGroup grupo;
     private BD bd;
-    private String categoriaSelecionada, palavra, categoria;
+    private String categoriaSelecionada, palavra, categoria, nivel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -108,8 +108,6 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this, "Deu certo, BOA!", Toast.LENGTH_SHORT).show();
                 bd.salvarPalavra(palavra1);
             }
-
-
 
         }
         if(v == btnListar) {
