@@ -53,8 +53,8 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         contadorVitoria = 0;
         indiceLista = 0;
 
-
-
+        listaObjetos = new ArrayList<Palavra>();
+        databasePalavra = new BD(this);
 
         listaImagens = new ArrayList<Integer>();
         listaImagens.add(R.drawable.forca_1_9);
@@ -109,10 +109,11 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             Button b = findViewById(listaIdsButtons.get(j));
             b.setOnClickListener(this);
         }
-        atualizaNivel();
+        inicializaJogo(nivelAtual = "FACIL");
 
     }
     //a
+
     public void inicializaJogo(String nivel) {
         inicializaBanco();
 
@@ -165,12 +166,18 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             b.setEnabled(true);
         }
 
-        Toast.makeText(this, "A categoria da palavra é: " + listaObjetos.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+        if(nivelAtual == "FACIL") {
+            Toast.makeText(this, "A categoria da palavra é: " + listaFacil.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+        }
+        else if (nivelAtual == "MEDIO") {
+            Toast.makeText(this, "A categoria da palavra é: " + listaMedia.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+        }
+        else if (nivelAtual == "DIFICIL") {
+            Toast.makeText(this, "A categoria da palavra é: " + listaDificil.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void inicializaBanco() {
-        listaObjetos = new ArrayList<Palavra>();
-        databasePalavra = new BD(this);
         listaObjetos = databasePalavra.listarPalavras();
         palavra = listaObjetos.get(indiceLista).getPalavraDigitada();
         Collections.shuffle(listaObjetos);
@@ -191,15 +198,17 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
 
     public void atualizaNivel() {
         contadorVitoria++;
-        nivelAtual = new String();
 
         if(contadorVitoria <= 3) {
+            indiceLista = 0;
             nivelAtual = "FACIL";
         }
         else if(contadorVitoria <= 6) {
+            indiceLista = 0;
             nivelAtual = "MEDIO";
         }
         else {
+            indiceLista = 0;
             nivelAtual = "DIFICIL";
         }
 
@@ -279,8 +288,17 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
     public void onClick(View v) {
 
         if(v == btnDica) {
-            Toast.makeText(this, "Dica: " + listaObjetos.get(indiceLista).getDica(), Toast.LENGTH_SHORT).show();
-        }else {
+            if(nivelAtual == "FACIL") {
+                Toast.makeText(this, "Dica: " + listaFacil.get(indiceLista).getDica(), Toast.LENGTH_SHORT).show();
+            }
+            else if (nivelAtual == "MEDIO") {
+                Toast.makeText(this, "Dica: " + listaMedia.get(indiceLista).getDica(), Toast.LENGTH_SHORT).show();
+            }
+            else if (nivelAtual == "DIFICIL") {
+                Toast.makeText(this, "Dica: " + listaDificil.get(indiceLista).getDica(), Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
             Button b = (Button) v;
             verificaLetra(b.getText().toString().charAt(0));
             b.setEnabled(false);
