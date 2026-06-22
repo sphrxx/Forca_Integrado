@@ -23,8 +23,8 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
     private ImageView imagem;
     private ArrayList<Integer> listaImagens, listaIdsButtons;
     private ArrayList<Palavra> listaObjetos, listaCategorias, listaFacil, listaMedia, listaDificil;
-    private int indiceListaImagens, contaAcerto, contaErro, indiceLista, contadorVitoria;
-    private TextView texto, txAcerto, txErro;
+    private int indiceListaImagens, contaAcerto, contaErro, indiceLista, contadorVitoria, pontuacao;
+    private TextView texto, txAcerto, txErro, textCategoria, textNivel, textPontos;
     private String palavra, nivelAtual;
     private char[] estado;
     private Button b1, btnDica;
@@ -47,11 +47,15 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         imagem = findViewById(R.id.imageView2);
         txAcerto = findViewById(R.id.numAcerto);
         txErro = findViewById(R.id.numErro);
+        textCategoria = findViewById(R.id.textCategoria);
+        textNivel = findViewById(R.id.textNivel);
+        textPontos = findViewById(R.id.textPontos);
 
         contaAcerto = 0;
         contaErro = 0;
         contadorVitoria = 0;
         indiceLista = 0;
+        pontuacao = 0;
 
         listaObjetos = new ArrayList<Palavra>();
         databasePalavra = new BD(this);
@@ -168,13 +172,22 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
 
         if(nivelAtual == "FACIL") {
             Toast.makeText(this, "A categoria da palavra é: " + listaFacil.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+            textCategoria.setText("Categoria: " + listaFacil.get(indiceLista).getCategoria());
         }
+
         else if (nivelAtual == "MEDIO") {
             Toast.makeText(this, "A categoria da palavra é: " + listaMedia.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+            textCategoria.setText("Categoria: " + listaMedia.get(indiceLista).getCategoria());
         }
+
         else if (nivelAtual == "DIFICIL") {
             Toast.makeText(this, "A categoria da palavra é: " + listaDificil.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
+            textCategoria.setText("Categoria:" + listaDificil.get(indiceLista).getCategoria());
         }
+
+        textNivel.setText("Nível: " + nivelAtual);
+
+
     }
 
     public void inicializaBanco() {
@@ -233,11 +246,13 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         if(!status) {
             atualizaForca();
             contaErro++;
+            pontuacao -= 10;
             txErro.setText(Integer.toString(contaErro)+"/"+Integer.toString(listaImagens.size()));
         }
         else {
             atualizaTexto();
             contaAcerto++;
+            pontuacao += 20;
             txAcerto.setText(Integer.toString(contaAcerto));
         }
 
@@ -245,7 +260,9 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             btnDica.setVisibility(View.VISIBLE);
         }
 
+
         checaSeTerminou();
+        textPontos.setText("Pontos: " + Integer.toString(pontuacao));
     }
     public void checaSeTerminou() {
         boolean verifica = false;
@@ -258,6 +275,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         // senão, é porque completou o jogo
         if(!verifica) {
             AlertDialog.Builder caixa = new AlertDialog.Builder(this);
+            pontuacao += 50;
             caixa.setTitle("Você venceu!!!");
             caixa.setMessage("Você deseja jogar novamente?");
             caixa.setPositiveButton("Jogar", new DialogInterface.OnClickListener() {
@@ -272,6 +290,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         }
         if(contaErro >= listaImagens.size()) {
             AlertDialog.Builder caixa = new AlertDialog.Builder(this);
+            pontuacao -= 100;
             caixa.setTitle("Você perdeu, BOBÃO.");
             caixa.setMessage("Deseja jogar novamente?");
             caixa.setPositiveButton("Jogar", new DialogInterface.OnClickListener() {
