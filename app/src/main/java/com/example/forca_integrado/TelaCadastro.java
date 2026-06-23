@@ -89,9 +89,10 @@ public class TelaCadastro extends AppCompatActivity implements View.OnClickListe
             RadioButton r3 = findViewById(R.id.radioButton3);
             RadioButton r4 = findViewById(R.id.radioButton4);
             RadioButton r5 = findViewById(R.id.radioButton5);
+            RadioButton r6 = findViewById(R.id.radioButton6);
 
             boolean temRadioChecado = false;
-            if(r1.isChecked()||r1.isChecked()||r2.isChecked()||r3.isChecked()||r4.isChecked()||r5.isChecked()) {
+            if(r1.isChecked()||r1.isChecked()||r2.isChecked()||r3.isChecked()||r4.isChecked()||r5.isChecked()||r6.isChecked()) {
                 temRadioChecado = true;
             }
             else {

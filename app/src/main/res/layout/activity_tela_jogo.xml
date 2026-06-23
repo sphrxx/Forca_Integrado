@@ -33,6 +33,7 @@
                 android:id="@+id/imageView7"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_weight="0"
                 android:tint="#03A9F4"
                 app:srcCompat="@drawable/library_books_48px" />
@@ -58,6 +59,7 @@
                 android:id="@+id/imageView5"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_weight="0"
                 android:tint="#FFEB3B"
                 app:srcCompat="@drawable/star_48px_1_" />
@@ -67,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="Pontos: XYZ"
+                android:text="Pontos: 0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -83,6 +85,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_weight="0"
                 android:tint="#FF5722"
                 app:srcCompat="@drawable/local_fire_department_48px" />
@@ -124,18 +127,19 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/buttonDica"
-                android:layout_width="5dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.15"
-                android:backgroundTint="#E91E63"
-                android:text="Dica"
-                android:textColorLink="#BA3333" />
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_weight="0"
+                android:backgroundTint="#0A0A1A"
+                android:tint="#FFEB3B"
+                app:srcCompat="@drawable/emoji_objects_48px" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -169,6 +173,7 @@
                     android:id="@+id/imageView3"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="0"
                     app:srcCompat="@drawable/check_circle_24px_1_" />
 
@@ -178,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:gravity="center"
-                    android:text=" - 0"
+                    android:text="0"
                     android:textColor="#36EB1B"
                     android:textSize="34sp" />
 
@@ -207,6 +212,7 @@
                     android:id="@+id/imageView4"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="0"
                     app:srcCompat="@drawable/cancel_24px_1_" />
 
@@ -216,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:gravity="center"
-                    android:text=" - ⅒"
+                    android:text="⅒"
                     android:textColor="#FF0000"
                     android:textSize="34sp" />
 
@@ -238,7 +244,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="C O M P A S S O"
+            android:text="V O C Ê  É  T O P !"
             android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -249,8 +255,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:layout_weight="0.25"
-        android:background="#0A0A1A"
+        android:layout_weight="0"
+        android:background="@drawable/borda"
         android:orientation="vertical">
 
         <LinearLayout

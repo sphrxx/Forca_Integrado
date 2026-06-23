@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0A0A1A"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Jogo da Forca"
+            android:textColor="#FFFFFF"
             android:textSize="34sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -51,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Adivinhe a palavra antes de ser enforcado"
+            android:textColor="#FFFFFF"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -63,15 +66,18 @@
 
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Iniciar"
             android:textSize="24sp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/button4"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Configurações" />
+            android:layout_margin="5dp"
+            android:background="@drawable/borda2"
+            android:tint="#FFFFFF"
+            app:srcCompat="@drawable/settings_48px" />
     </LinearLayout>
 </LinearLayout>

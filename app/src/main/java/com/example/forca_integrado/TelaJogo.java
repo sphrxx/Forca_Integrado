@@ -1,10 +1,12 @@
 package com.example.forca_integrado;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +29,8 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
     private TextView texto, txAcerto, txErro, textCategoria, textNivel, textPontos;
     private String palavra, nivelAtual;
     private char[] estado;
-    private Button b1, btnDica;
+    private Button b1;
+    private ImageButton btnDica;
     private BD databasePalavra;
     private SharedPreferences shared;
 
@@ -171,17 +174,14 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         }
 
         if(nivelAtual == "FACIL") {
-            Toast.makeText(this, "A categoria da palavra é: " + listaFacil.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
             textCategoria.setText("Categoria: " + listaFacil.get(indiceLista).getCategoria());
         }
 
         else if (nivelAtual == "MEDIO") {
-            Toast.makeText(this, "A categoria da palavra é: " + listaMedia.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
             textCategoria.setText("Categoria: " + listaMedia.get(indiceLista).getCategoria());
         }
 
         else if (nivelAtual == "DIFICIL") {
-            Toast.makeText(this, "A categoria da palavra é: " + listaDificil.get(indiceLista).getCategoria(), Toast.LENGTH_SHORT).show();
             textCategoria.setText("Categoria:" + listaDificil.get(indiceLista).getCategoria());
         }
 
@@ -196,7 +196,6 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         Collections.shuffle(listaObjetos);
 
         indiceLista++;
-
     }
 
     public void atualizaTexto(){
@@ -210,7 +209,6 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
     }
 
     public void atualizaNivel() {
-        contadorVitoria++;
 
         if(contadorVitoria <= 3) {
             indiceLista = 0;
@@ -235,7 +233,7 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
 
     public void verificaLetra(char c) {
         boolean status = false;
-        Toast.makeText(this, palavra+ " "+c, Toast.LENGTH_SHORT).show();
+
         for(int i = 0; i < palavra.length(); i++) {
             if (palavra.charAt(i) == c) {
                 status = true;
@@ -260,11 +258,18 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
             btnDica.setVisibility(View.VISIBLE);
         }
 
+        if(contaErro >= listaImagens.size()) {
+            for(int j = 0; j < listaIdsButtons.size(); j++) {
+                Button b = findViewById(listaIdsButtons.get(j));
+                b.setEnabled(false);
+            }
+        }
 
-        checaSeTerminou();
+
+        checaSeTerminou(nivelAtual);
         textPontos.setText("Pontos: " + Integer.toString(pontuacao));
     }
-    public void checaSeTerminou() {
+    public void checaSeTerminou(String nivelAtual) {
         boolean verifica = false;
         for(int i = 0; i < estado.length; i++) {
             if(estado[i] == '_') {
@@ -274,29 +279,53 @@ public class TelaJogo extends AppCompatActivity implements View.OnClickListener 
         }
         // senão, é porque completou o jogo
         if(!verifica) {
+
+            if(nivelAtual == "FACIL") {
+                pontuacao += 25;
+            }
+            else if(nivelAtual == "MEDIO"){
+                pontuacao += 50;
+            }
+            else if(nivelAtual == "DIFICIL"){
+                pontuacao += 75;
+            }
+
             AlertDialog.Builder caixa = new AlertDialog.Builder(this);
-            pontuacao += 50;
-            caixa.setTitle("Você venceu!!!");
-            caixa.setMessage("Você deseja jogar novamente?");
+            caixa.setCancelable(false); // This makes it obligatory
+            caixa.setTitle("Você venceu!");
+            caixa.setMessage("Deseja jogar novamente?");
             caixa.setPositiveButton("Jogar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     atualizaNivel();
+                    contadorVitoria++;
+                }
+            });
+            caixa.setNegativeButton("Sair", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(TelaJogo.this, MainActivity.class));
                 }
             });
             caixa.show();
-
-
         }
+
         if(contaErro >= listaImagens.size()) {
             AlertDialog.Builder caixa = new AlertDialog.Builder(this);
             pontuacao -= 100;
+            caixa.setCancelable(false); // This makes it obligatory
             caixa.setTitle("Você perdeu, BOBÃO.");
             caixa.setMessage("Deseja jogar novamente?");
             caixa.setPositiveButton("Jogar", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     atualizaNivel();
+                }
+            });
+            caixa.setNegativeButton("Sair", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(TelaJogo.this, MainActivity.class));
                 }
             });
             caixa.show();
